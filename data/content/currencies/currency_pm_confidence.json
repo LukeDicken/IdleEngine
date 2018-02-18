@@ -1,0 +1,24 @@
+{
+  "gid":"currency_pm_confidence",
+  "type":"currency",
+  "components": {
+    "wallet": {
+      "initialvalue": 0,
+      "minvalue": 0,
+      "maxvalue": 1000000000
+    },
+    "lockout": {
+      "visible": [
+        {
+          "locktype": "counter",
+          "id": "action_meet_with_pm",
+          "amount": 1
+        }
+      ]
+    },
+    "ui": {
+      "name": "PM Confidence",
+      "description": "We might not respect them. But we need them"
+    }
+  }
+}

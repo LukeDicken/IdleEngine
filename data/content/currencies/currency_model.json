@@ -1,0 +1,24 @@
+{
+  "gid":"currency_model",
+  "type":"currency",
+  "components": {
+    "wallet": {
+      "initialvalue": 0,
+      "minvalue": 0,
+      "maxvalue": 1000000000
+    },
+    "lockout": {
+      "visible": [
+        {
+          "locktype": "counter",
+          "id": "action_build_model",
+          "amount": 1
+        }
+      ]
+    },
+    "ui": {
+      "name": "Models",
+      "description": "A predictive model"
+    }
+  }
+}

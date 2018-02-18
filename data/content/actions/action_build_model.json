@@ -1,0 +1,31 @@
+{
+  "gid":"action_build_model",
+  "type":"action",
+  "components": {
+    "cost": [
+      {
+        "id":"currency_report",
+        "amount":10
+      }
+    ],
+    "output": [
+      {
+        "id": "currency_model",
+        "amount": 1
+      }
+    ],
+    "lockout": {
+      "visible": [
+        {
+          "locktype": "counter",
+          "id": "action_write_report",
+          "amount": 5
+        }
+      ]
+    },
+    "ui": {
+      "label": "Build Model",
+      "description": "Time to get predictive"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>The Data Mine</title>
+    </head>
+    <body>
+    <div align="center"><h1>Another Day in the Data Mine</h1></div>
+    <h2>Welcome {{ player.name }}</h2>
+    <div border="1">
+        <ul>
+        {% for currency in player.visibleWallet %}
+            <li>You have {{ player.wallet[currency] }} {{ game.currencies[currency].name }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% for action in player.visibleActions %}
+        <button onclick="window.open('/game/{{ player.name }}/act/{{ game.actions[action].id }}/', '_self')" title="{{ game.actions[action].description }}" {{ player.enabledActions[action] }}>{{ game.actions[action].label }}</button><br />
+    {% endfor %}
+    {% if player.debug %}
+    <div>Debug - Counters</div>
+        <ul>
+        {% for counter in player.counters %}
+            <li>{{ counter }} - {{ player.counters[counter] }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </body>
+</html>

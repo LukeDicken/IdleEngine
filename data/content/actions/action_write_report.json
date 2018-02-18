@@ -1,0 +1,18 @@
+{
+  "gid":"action_write_report",
+  "type":"action",
+  "components": {
+    "cost": {},
+    "output": [
+      {
+        "id": "currency_report",
+        "amount": 1
+      }
+    ],
+    "lockout": {},
+    "ui": {
+      "label": "Write Report",
+      "description": "Slave away over graphs"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "gid":"action_meet_with_pm",
+  "type":"action",
+  "components": {
+    "cost": [
+      {
+        "id":"currency_model",
+        "amount":2
+      }
+    ],
+    "output": [
+      {
+        "id": "currency_pm_confidence",
+        "amount": 1
+      }
+    ],
+    "lockout": {
+      "visible": [
+        {
+          "locktype": "counter",
+          "id": "action_build_model",
+          "amount": 1
+        }
+      ]
+    },
+    "ui": {
+      "label": "Meet with PM",
+      "description": "It might be fun?"
+    }
+  }
+}
