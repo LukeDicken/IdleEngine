@@ -39,7 +39,4 @@ if __name__=="__main__":
     global game
     game = Game()
     game.load_content()
-    # for c in game.currencies:
-    #     print c.name
-    # print game.actions
     app.run(host='0.0.0.0')

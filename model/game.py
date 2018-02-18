@@ -21,22 +21,28 @@ class Game:
                     with open(os.path.join(root, file), "r") as f:
                         jsonBlob = json_load_byteified(f)
                         if "type" not in jsonBlob:
+                            # no type defined - fail
                             raise ValueError("No type definition for " + file)
                         type = jsonBlob["type"]
                         gid = jsonBlob["gid"]
                         if gid in self.ids:
+                            # enforce unique gids
                             raise ValueError("An entity with this GID already exists: " + gid + " - duplicate found in: " + file)
                         if type == "action":
+                            # actions - things the player can do
                             self.actions[gid] = (content.Action.parse_action(jsonBlob))
                             self.ids.append(gid)
                         elif type == "currency":
+                            # currencies - things the player collects
                             self.currencies[gid] = (content.Currency.parse_currency(jsonBlob))
                             self.ids.append(gid)
                         else:
+                            # something else?
                             raise ValueError(type + " is not a supported content type in " + file)
 
     def fetch_player(self, name):
-        # given a player, find
+        # given a playername, find or create a player object for them
+        # probably should be a bit more robust here
         try:
             # get the player if it exists
             player = self.players[name]
@@ -50,6 +56,7 @@ class Game:
     def lookup_by_gid(self, gid):
         # assume that there is a GID, find where it lives
         if gid not in self.currencies and gid not in self.actions:
+            # fail out if it doesn't exist
             return None
         else:
             try:
@@ -58,6 +65,7 @@ class Game:
                 return self.currencies[gid]
 
     def execute(self, actionName, player):
+        # execute a specific action by a player
         action = self.actions[actionName]
         try:
             # check that the player has the cost
