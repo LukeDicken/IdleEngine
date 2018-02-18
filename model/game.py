@@ -1,4 +1,5 @@
 import os
+# noinspection PyUnresolvedReferences
 from utility.json_byteify import json_load_byteified
 import content
 from player import Player
@@ -14,7 +15,7 @@ class Game:
 
     def load_content(self):
         # open all json files
-        for root, dirs, files in os.walk('data'):
+        for root, dirs, files in os.walk('IdleEngine/data'): #note that this is an issue with PyCharm. TODO - fix
             for file in files:
                 if ".json" in file:
                     with open(os.path.join(root, file), "r") as f:
@@ -35,6 +36,7 @@ class Game:
                             raise ValueError(type + " is not a supported content type in " + file)
 
     def fetch_player(self, name):
+        # given a player, find
         try:
             # get the player if it exists
             player = self.players[name]
@@ -46,6 +48,7 @@ class Game:
         return player
 
     def lookup_by_gid(self, gid):
+        # assume that there is a GID, find where it lives
         if gid not in self.currencies and gid not in self.actions:
             return None
         else:
@@ -55,11 +58,9 @@ class Game:
                 return self.currencies[gid]
 
     def execute(self, actionName, player):
-        # check that the player has the cost
-        # deduct the cost from player wallet
-        # add the output to player wallet
         action = self.actions[actionName]
         try:
+            # check that the player has the cost
             for cost in action.costs:
                 if player.wallet[cost] < action.costs[cost]:
                     raise ValueError("Player does not have enough in their wallet for " + actionName)
@@ -67,8 +68,10 @@ class Game:
             print ve.message
             return False
         for cost in action.costs:
+            # deduct the cost from player wallet
             player.wallet[cost] -= action.costs[cost]
         for reward in action.outputs:
+            # add the output to player wallet
             player.wallet[reward] += action.outputs[reward]
         player.log_counter(actionName)
         return True

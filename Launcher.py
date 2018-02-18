@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from model.game import Game
 
 app = Flask(__name__)
@@ -11,8 +11,16 @@ def do_action(username, action):
     game.execute(action, player) # this is going to return False if it fails or True if not - TODO: Handle
     return show_main_ui(username)
 
+@app.route("/login/", methods=['POST'])
+def login():
+    global game
+    username = request.form['name']
+    print("%s just logged in", username)
+    return show_main_ui(username)
 
-@app.route("/game/<username>")
+
+
+@app.route("/game/<username>/")
 def show_main_ui(username):
     #player += 1
     # retrieve player name from gamestate -- TODO make this properly session/passwordy

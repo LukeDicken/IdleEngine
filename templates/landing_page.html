@@ -3,6 +3,10 @@
         <title>The Data Mine</title>
     </head>
     <body>
-        <button onclick="window.open('/game/luke', '_self')">Open!</button>
+    <form method="POST" action="/login/">
+        <label for="name">Enter your name: </label><input type="text" name="name" id="name" /><br />
+        <input type="submit" value="Let me in!" />
+
+    </form>
     </body>
 </html>
