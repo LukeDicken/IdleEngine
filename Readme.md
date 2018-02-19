@@ -1,5 +1,5 @@
-### Idle Engine
-## An engine for idle/incremental/clicker games
+## Idle Engine
+### An engine for idle/incremental/clicker games
 
 The point of the Idle Engine is to create a content-agnostic engine for web-based clicker games.
 
@@ -22,3 +22,12 @@ Three sample currencies and three sample actions are currently included in data/
 Idle Engine is powered by Flask.
 
 Trello board for progress tracking: https://trello.com/b/hqXqyGnn/idle-engine#
+
+### Getting Started
+
+To build your own clicker you will need:
+1. Clone the repository
+2. Install the Flask python module (I reccomend starting a clean virtualenv but it probably isn't necessary)
+3. Look in the data/content/ folder. There are some example content definitions there to get you started while I get round to documenting the system
+4. Look at templates/ for the HTML interface files. These are super bare-bones but with some love could be all shiny and CSS'y
+5. When you're good to go, launch with python Launcher.py
