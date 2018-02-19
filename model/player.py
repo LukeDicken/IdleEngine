@@ -176,7 +176,9 @@ class Player:
             # deduct the cost from player wallet
             self.wallet[cost] -= automation.costs[cost]
         for action in automation.automation:
+            # get a copy -- so we can run timers independently
             clean = action.copy()
+            # set up the timer for scheduling
             clean["nextTick"] = clean["cooldown"]
             self.automated_actions.append(clean)
         self.log_counter(automationName)
@@ -184,10 +186,14 @@ class Player:
 
 
     def automatic_execute(self, game):
+        # every tick
         for action in self.automated_actions:
+            # count down each action
             action['nextTick'] -= 1
             if action['nextTick'] == 0:
-                self.execute(action['actionid'], game) # TODO - later allow auto actions to have their own cooldown timer
+                # if its timer rings, run it
+                self.execute(action['actionid'], game)
+                # reset the timer
                 action['nextTick'] = action['cooldown']
 
 
