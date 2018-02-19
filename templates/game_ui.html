@@ -1,8 +1,13 @@
 <html>
     <head>
         <title>The Data Mine</title>
+        <script type="text/javascript">
+            function page_refresh() {
+                setTimeout(function(){ window.open('/game/{{ player.name }}/', '_self') }, 1000);
+            }
+        </script>
     </head>
-    <body>
+    <body onload="page_refresh()">
     <div align="center"><h1>Another Day in the Data Mine</h1></div>
     <h2>Welcome {{ player.name }}</h2>
     <div border="1">
