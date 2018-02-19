@@ -1,0 +1,40 @@
+{
+  "gid":"automate_write_report",
+  "type":"automation",
+  "components":{
+    "ui":{
+      "label":"Automated Workflow",
+      "description":"Who wants to write reports anyhow"
+    },
+    "lockout":{
+      "visible":[
+        {
+          "locktype":"counter",
+          "id": "action_write_report",
+          "amount": 20
+        },
+        {
+          "locktype":"counter",
+          "id": "action_meet_with_pm",
+          "amount": 1
+        }
+      ]
+    },
+    "cost":[
+      {
+        "id":"currency_report",
+        "amount":10
+      },
+      {
+        "id":"currency_pm_confidence",
+        "amount":1
+      }
+    ],
+    "automation":[
+      {
+        "actionid":"action_write_report",
+        "cooldown":10
+      }
+    ]
+  }
+}

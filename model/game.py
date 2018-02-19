@@ -3,6 +3,7 @@ import os
 from utility.json_byteify import json_load_byteified
 import content
 from player import Player
+import time
 
 
 class Game:
@@ -11,7 +12,9 @@ class Game:
         self.ids = []
         self.currencies = {}
         self.actions = {}
+        self.automations = {}
         self.players = {}
+        self.debug = True # toggles some additional output
 
     def load_content(self):
         # open all json files
@@ -21,22 +24,31 @@ class Game:
                     with open(os.path.join(root, file), "r") as f:
                         jsonBlob = json_load_byteified(f)
                         if "type" not in jsonBlob:
+                            # no type defined - fail
                             raise ValueError("No type definition for " + file)
                         type = jsonBlob["type"]
                         gid = jsonBlob["gid"]
                         if gid in self.ids:
+                            # enforce unique gids
                             raise ValueError("An entity with this GID already exists: " + gid + " - duplicate found in: " + file)
                         if type == "action":
+                            # actions - things the player can do
                             self.actions[gid] = (content.Action.parse_action(jsonBlob))
                             self.ids.append(gid)
                         elif type == "currency":
+                            # currencies - things the player collects
                             self.currencies[gid] = (content.Currency.parse_currency(jsonBlob))
                             self.ids.append(gid)
+                        elif type == "automation":
+                            self.automations[gid] = content.Automation.parse_automation(jsonBlob)
+                            self.ids.append(gid)
                         else:
+                            # something else?
                             raise ValueError(type + " is not a supported content type in " + file)
 
     def fetch_player(self, name):
-        # given a player, find
+        # given a playername, find or create a player object for them
+        # probably should be a bit more robust here
         try:
             # get the player if it exists
             player = self.players[name]
@@ -50,6 +62,7 @@ class Game:
     def lookup_by_gid(self, gid):
         # assume that there is a GID, find where it lives
         if gid not in self.currencies and gid not in self.actions:
+            # fail out if it doesn't exist
             return None
         else:
             try:
@@ -58,20 +71,14 @@ class Game:
                 return self.currencies[gid]
 
     def execute(self, actionName, player):
-        action = self.actions[actionName]
-        try:
-            # check that the player has the cost
-            for cost in action.costs:
-                if player.wallet[cost] < action.costs[cost]:
-                    raise ValueError("Player does not have enough in their wallet for " + actionName)
-        except ValueError, ve:
-            print ve.message
-            return False
-        for cost in action.costs:
-            # deduct the cost from player wallet
-            player.wallet[cost] -= action.costs[cost]
-        for reward in action.outputs:
-            # add the output to player wallet
-            player.wallet[reward] += action.outputs[reward]
-        player.log_counter(actionName)
-        return True
+        player.execute(actionName, self)
+
+    def add_automation(self, automationName, player):
+        player.add_automation(automationName, self)
+
+    def gamemanager_tick(self):
+        while(True):
+            print("Tick")
+            for player in self.players:
+                self.players[player].automatic_execute(self)
+            time.sleep(1) # simulator speed is 1s (+overhead). All times multiples of 1s
