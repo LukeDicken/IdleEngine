@@ -11,8 +11,10 @@ The first pass of Idle Engine support
   - costs
   - rewards
   - coditional visibility
+- autoclickers
+  - cooldown timer
   
-This is a minimal first pass. Concepts expected to be included at some point included auto-clickers and buffs.
+This is a minimal first pass. Concepts expected to be included at some point: buffs.
 I'd also quite like to include some MMO concepts by letting players interact with each other.
 
 Three sample currencies and three sample actions are currently included in data/. There should indicate how to form your own content for the Idle Engine. UI pages are stored in templates/
