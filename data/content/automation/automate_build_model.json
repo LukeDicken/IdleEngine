@@ -1,0 +1,32 @@
+{
+  "gid":"automate_build_model",
+  "type":"automation",
+  "components":{
+    "ui":{
+      "label":"ML Pipeline",
+      "description":"What if the models could make themselves?"
+    },
+    "lockout":{
+      "visible":[
+        {
+          "locktype":"counter",
+          "id": "automate_write_report",
+          "comparetype":"greater-equal",
+          "amount": 10
+        }
+      ]
+    },
+    "cost":[
+      {
+        "id":"currency_pm_confidence",
+        "amount":5
+      }
+    ],
+    "automation":[
+      {
+        "actionid":"action_build_model",
+        "cooldown":30
+      }
+    ]
+  }
+}
