@@ -19,6 +19,7 @@
         {
           "locktype": "counter",
           "id": "action_build_model",
+          "comparetype":"greater-equal",
           "amount": 1
         }
       ]

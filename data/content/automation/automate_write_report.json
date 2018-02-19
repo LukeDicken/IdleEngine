@@ -11,11 +11,13 @@
         {
           "locktype":"counter",
           "id": "action_write_report",
+          "comparetype":"greater-equal",
           "amount": 20
         },
         {
           "locktype":"counter",
           "id": "action_meet_with_pm",
+          "comparetype":"greater-equal",
           "amount": 1
         }
       ]

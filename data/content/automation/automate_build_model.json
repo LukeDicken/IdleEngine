@@ -11,6 +11,7 @@
         {
           "locktype":"counter",
           "id": "automate_write_report",
+          "comparetype":"greater-equal",
           "amount": 10
         }
       ]

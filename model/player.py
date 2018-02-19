@@ -52,8 +52,21 @@ class Player:
             if cond['locktype'] == 'counter':
                 count = self.get_counter(cond['id'])
                 required = cond['amount']
-                if count < required:
-                    return False
+                if 'comparetype' not in cond:
+                    # establish default
+                    cond['comparetype'] = 'greater-equal'
+
+                if cond['comparetype'] == 'greater-equal':
+                    if count < required:
+                        return False
+                elif cond['comparetype'] == 'equal':
+                    if count != required:
+                        return False
+                elif cond['comparetype'] == 'less-equal':
+                    if count > required:
+                        return False
+                else:
+                    raise ValueError("Comparetype not supported: " + cond['comparetype'])
             else:
                 raise ValueError("Locktypes other than counter are not currently supported - in " + cond)
         return True
@@ -72,8 +85,21 @@ class Player:
             if cond['locktype'] == 'counter':
                 count = self.get_counter(cond['id'])
                 required = cond['amount']
-                if count < required:
-                    return False
+                if 'comparetype' not in cond:
+                    # establish default
+                    cond['comparetype'] = 'greater-equal'
+
+                if cond['comparetype'] == 'greater-equal':
+                    if count < required:
+                        return False
+                elif cond['comparetype'] == 'equal':
+                    if count != required:
+                        return False
+                elif cond['comparetype'] == 'less-equal':
+                    if count > required:
+                        return False
+                else:
+                    raise ValueError("Comparetype not supported: " + cond['comparetype'])
             else:
                 raise ValueError("Locktypes other than counter are not currently supported - in " + cond)
         return True
@@ -110,8 +136,21 @@ class Player:
             if cond['locktype'] == 'counter':
                 count = self.get_counter(cond['id'])
                 required = cond['amount']
-                if count < required:
-                    return False
+                if 'comparetype' not in cond:
+                    # establish default
+                    cond['comparetype'] = 'greater-equal'
+
+                if cond['comparetype'] == 'greater-equal':
+                    if count < required:
+                        return False
+                elif cond['comparetype'] == 'equal':
+                    if count != required:
+                        return False
+                elif cond['comparetype'] == 'less-equal':
+                    if count > required:
+                        return False
+                else:
+                    raise ValueError("Comparetype not supported: " + cond['comparetype'])
             else:
                 raise ValueError("Locktypes other than counter are not currently supported - in " + cond)
         return True

@@ -12,6 +12,7 @@
         {
           "locktype": "counter",
           "id": "action_meet_with_pm",
+          "comparetype":"greater-equal",
           "amount": 1
         }
       ]
