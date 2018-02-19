@@ -21,12 +21,17 @@
     {% for action in player.visibleActions %}
         <button onclick="window.open('/game/{{ player.name }}/act/{{ game.actions[action].id }}/', '_self')" title="{{ game.actions[action].description }}" {{ player.enabledActions[action] }}>{{ game.actions[action].label }}</button><br />
     {% endfor %}
+    {% if player.counters['feature_automation'] == 1 %}
     <h3>Automation</h3>
     {% for automation in player.visibleAutomations %}
         <button onclick="window.open('/game/{{ player.name }}/automate/{{ game.automations[automation].id }}/', '_self')" title="{{ game.automations[automation].description }}" {{ player.enabledAutomations[automation] }}>{{ game.automations[automation].label}}</button><br />
     {% endfor %}
+    {% endif %}
+    {% if player.counters['feature_research'] == 1 %}
+    <h3>Research</h3>
+    {% endif %}
     {% if game.debug %}
-    <div>Debug - Counters</div>
+    <h3>Debug - Counters</h3>
         <ul>
         {% for counter in player.counters %}
             <li>{{ counter }} - {{ player.counters[counter] }}</li>

@@ -1,0 +1,30 @@
+{
+  "gid":"feature_automation",
+  "type":"action",
+  "components": {
+    "cost": [
+    ],
+    "output": [
+    ],
+    "lockout": {
+      "visible": [
+        {
+          "locktype": "counter",
+          "id": "action_meet_with_pm",
+          "comparetype":"greater-equal",
+          "amount": 2
+        },
+        {
+          "locktype":"counter",
+          "id":"feature_automation",
+          "comparetype":"equal",
+          "amount":0
+        }
+      ]
+    },
+    "ui": {
+      "label": "Automation",
+      "description": "Work smart. Not hard."
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "gid":"feature_research",
+  "type":"action",
+  "components": {
+    "cost": [
+    ],
+    "output": [
+    ],
+    "lockout": {
+      "visible": [
+        {
+          "locktype": "counter",
+          "id": "automate_build_model",
+          "comparetype":"greater-equal",
+          "amount": 10
+        },
+        {
+          "locktype":"counter",
+          "id":"feature_research",
+          "comparetype":"equal",
+          "amount":0
+        }
+      ]
+    },
+    "ui": {
+      "label": "Begin Research",
+      "description": "It's lab-orious!"
+    }
+  }
+}
