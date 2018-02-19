@@ -17,7 +17,7 @@
         <button onclick="window.open('/game/{{ player.name }}/act/{{ game.actions[action].id }}/', '_self')" title="{{ game.actions[action].description }}" {{ player.enabledActions[action] }}>{{ game.actions[action].label }}</button><br />
     {% endfor %}
     <h3>Automation</h3>
-    {% for automation in game.automations %}
+    {% for automation in player.visibleAutomations %}
         <button onclick="window.open('/game/{{ player.name }}/automate/{{ game.automations[automation].id }}/', '_self')" title="{{ game.automations[automation].description }}">{{ game.automations[automation].label}}</button><br />
     {% endfor %}
     {% if game.debug %}

@@ -9,12 +9,12 @@
     "lockout":{
       "visible":[
         {
-          "type":"counter",
+          "locktype":"counter",
           "id": "action_write_report",
           "amount": 20
         },
         {
-          "type":"counter",
+          "locktype":"counter",
           "id": "action_meet_with_pm",
           "amount": 1
         }

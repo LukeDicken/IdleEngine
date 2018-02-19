@@ -9,6 +9,8 @@ class Player:
         self.enabledActions = {}
         self.counters = {}
         self.automated_actions = []
+        self.visibleAutomations = []
+        self.enabledAutomactions = {}
 
     def log_counter(self, counter):
         # counters are strictly increasing
@@ -90,12 +92,37 @@ class Player:
                 return "disabled" # dirty - feed fwd to HTML
         return ""
 
+    def check_automation(self, game):
+        self.check_automation_visibility(game)
+        # self.check_automation_enabled(game)
+
+    def check_automation_visibility(self, game):
+        # action visibility - which buttons are shown?
+        self.visibleAutomations = []
+        for automation in game.automations:
+            if self.is_automation_visible(game, automation):
+                self.visibleAutomations.append(automation)
+
+    def is_automation_visible(self, game, automation):
+        # check for a specific button
+        aut = game.automations[automation]
+        for cond in aut.visCond:
+            if cond['locktype'] == 'counter':
+                count = self.get_counter(cond['id'])
+                required = cond['amount']
+                if count < required:
+                    return False
+            else:
+                raise ValueError("Locktypes other than counter are not currently supported - in " + cond)
+        return True
+
     def player_checks(self, game):
         # called at the start of viewing a player
         # set up anything that might have changes that the template will need to access
         self.check_wallet_visibility(game)
         self.check_action_visibility(game)
         self.check_action_enabled(game)
+        self.check_automation(game)
 
     def execute(self, actionName, game):
         # execute a specific action by a player
