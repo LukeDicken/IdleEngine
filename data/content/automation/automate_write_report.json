@@ -23,11 +23,11 @@
     "cost":[
       {
         "id":"currency_report",
-        "amount":0
+        "amount":10
       },
       {
         "id":"currency_pm_confidence",
-        "amount":0
+        "amount":1
       }
     ],
     "automation":[

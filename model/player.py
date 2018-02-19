@@ -10,7 +10,7 @@ class Player:
         self.counters = {}
         self.automated_actions = []
         self.visibleAutomations = []
-        self.enabledAutomactions = {}
+        self.enabledAutomations = {}
 
     def log_counter(self, counter):
         # counters are strictly increasing
@@ -94,7 +94,7 @@ class Player:
 
     def check_automation(self, game):
         self.check_automation_visibility(game)
-        # self.check_automation_enabled(game)
+        self.check_automation_enabled(game)
 
     def check_automation_visibility(self, game):
         # action visibility - which buttons are shown?
@@ -115,6 +115,24 @@ class Player:
             else:
                 raise ValueError("Locktypes other than counter are not currently supported - in " + cond)
         return True
+
+    def check_automation_enabled(self, game):
+        # are actions enabled or disabled?
+        self.enabledAutomations = {}
+        for automation in game.automations:
+            self.enabledAutomations[automation] = self.is_automation_enabled(game, automation)
+
+    def is_automation_enabled(self, game, automation):
+        # is this specific action enabled?
+        aut = game.automations[automation]
+        for cost in aut.costs:
+            if self.wallet[cost] < aut.costs[cost]:
+                return "disabled" # dirty - feed fwd to HTML
+        return ""
+
+    def check_automation(self, game):
+        self.check_automation_visibility(game)
+        self.check_automation_enabled(game)
 
     def player_checks(self, game):
         # called at the start of viewing a player
