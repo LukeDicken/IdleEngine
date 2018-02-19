@@ -18,3 +18,5 @@ I'd also quite like to include some MMO concepts by letting players interact wit
 Three sample currencies and three sample actions are currently included in data/. There should indicate how to form your own content for the Idle Engine. UI pages are stored in templates/
 
 Idle Engine is powered by Flask.
+
+Trello board for progress tracking: https://trello.com/b/hqXqyGnn/idle-engine#
