@@ -8,6 +8,7 @@ class Player:
         self.visibleActions = []
         self.enabledActions = {}
         self.counters = {}
+        self.automated_actions = []
 
     def log_counter(self, counter):
         # counters are strictly increasing
@@ -89,9 +90,59 @@ class Player:
                 return "disabled" # dirty - feed fwd to HTML
         return ""
 
-    def player_tick(self, game):
+    def player_checks(self, game):
         # called at the start of viewing a player
         # set up anything that might have changes that the template will need to access
         self.check_wallet_visibility(game)
         self.check_action_visibility(game)
         self.check_action_enabled(game)
+
+    def execute(self, actionName, game):
+        # execute a specific action by a player
+        action = game.actions[actionName]
+        print("Taking action " + actionName + " for player " + self.name)
+        try:
+            # check that the player has the cost
+            for cost in action.costs:
+                if self.wallet[cost] < action.costs[cost]:
+                    raise ValueError("Player does not have enough in their wallet for " + actionName)
+        except ValueError, ve:
+            print ve.message
+            return False
+        for cost in action.costs:
+            # deduct the cost from player wallet
+            self.wallet[cost] -= action.costs[cost]
+        for reward in action.outputs:
+            # add the output to player wallet
+            self.wallet[reward] += action.outputs[reward]
+        self.log_counter(actionName)
+        return True
+
+    def add_automation(self, automationName, game):
+        automation = game.automations[automationName]
+        try:
+            for cost in automation.costs:
+                if self.wallet[cost] < automation.costs[cost]:
+                    raise ValueError("Player does not have enough in their wallet for " + automationName)
+        except ValueError, ve:
+            print ve.message
+            return False
+        for cost in automation.costs:
+            # deduct the cost from player wallet
+            self.wallet[cost] -= automation.costs[cost]
+        for action in automation.automation:
+            clean = action.copy()
+            clean["nextTick"] = clean["cooldown"]
+            self.automated_actions.append(clean)
+        self.log_counter(automationName)
+        return True
+
+
+    def automatic_execute(self, game):
+        for action in self.automated_actions:
+            action['nextTick'] -= 1
+            if action['nextTick'] == 0:
+                self.execute(action['actionid'], game) # TODO - later allow auto actions to have their own cooldown timer
+                action['nextTick'] = action['cooldown']
+
+

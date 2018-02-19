@@ -12,10 +12,15 @@
         {% endfor %}
         </ul>
     </div>
+    <h3>Production</h3>
     {% for action in player.visibleActions %}
         <button onclick="window.open('/game/{{ player.name }}/act/{{ game.actions[action].id }}/', '_self')" title="{{ game.actions[action].description }}" {{ player.enabledActions[action] }}>{{ game.actions[action].label }}</button><br />
     {% endfor %}
-    {% if player.debug %}
+    <h3>Automation</h3>
+    {% for automation in game.automations %}
+        <button onclick="window.open('/game/{{ player.name }}/automate/{{ game.automations[automation].id }}/', '_self')" title="{{ game.automations[automation].description }}">{{ game.automations[automation].label}}</button><br />
+    {% endfor %}
+    {% if game.debug %}
     <div>Debug - Counters</div>
         <ul>
         {% for counter in player.counters %}

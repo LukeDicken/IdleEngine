@@ -3,6 +3,7 @@ import os
 from utility.json_byteify import json_load_byteified
 import content
 from player import Player
+import time
 
 
 class Game:
@@ -11,7 +12,9 @@ class Game:
         self.ids = []
         self.currencies = {}
         self.actions = {}
+        self.automations = {}
         self.players = {}
+        self.debug = True # toggles some additional output
 
     def load_content(self):
         # open all json files
@@ -35,6 +38,9 @@ class Game:
                         elif type == "currency":
                             # currencies - things the player collects
                             self.currencies[gid] = (content.Currency.parse_currency(jsonBlob))
+                            self.ids.append(gid)
+                        elif type == "automation":
+                            self.automations[gid] = content.Automation.parse_automation(jsonBlob)
                             self.ids.append(gid)
                         else:
                             # something else?
@@ -65,21 +71,14 @@ class Game:
                 return self.currencies[gid]
 
     def execute(self, actionName, player):
-        # execute a specific action by a player
-        action = self.actions[actionName]
-        try:
-            # check that the player has the cost
-            for cost in action.costs:
-                if player.wallet[cost] < action.costs[cost]:
-                    raise ValueError("Player does not have enough in their wallet for " + actionName)
-        except ValueError, ve:
-            print ve.message
-            return False
-        for cost in action.costs:
-            # deduct the cost from player wallet
-            player.wallet[cost] -= action.costs[cost]
-        for reward in action.outputs:
-            # add the output to player wallet
-            player.wallet[reward] += action.outputs[reward]
-        player.log_counter(actionName)
-        return True
+        player.execute(actionName, self)
+
+    def add_automation(self, automationName, player):
+        player.add_automation(automationName, self)
+
+    def gamemanager_tick(self):
+        while(True):
+            print("Tick")
+            for player in self.players:
+                self.players[player].automatic_execute(self)
+            time.sleep(1) # simulator speed is 1s (+overhead). All times multiples of 1s
